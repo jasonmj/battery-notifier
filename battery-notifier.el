@@ -32,9 +32,10 @@
 
 ;;; Commentary:
 ;;
-;;  Simple package to notify when battery capacity is low.  Allows
-;;  for configuration of notification capacity threshold, suspend
-;;  capacity threshold, notification function, and suspend function.
+;;  Simple package to notify when battery capacity is low and suspend the
+;;  computer when battery capacity is critically low. Allows for configuration
+;;  of notification capacity threshold, suspend capacity threshold,
+;;  notification function, and suspend function.
 ;;  This is a global minor mode.
 
 ;;; Installation:
@@ -74,7 +75,7 @@
 (define-minor-mode battery-notifier-mode
   "Toggle use of 'battery-notifier-mode'.
    This global minor mode sends notifications when battery capacity is low
-   and suspends the computer when battery is critically low."
+   and suspends the computer when battery capacity is critically low."
   :lighter " enabled"
   :init-value nil
   :keymap nil
