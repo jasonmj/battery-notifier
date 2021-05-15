@@ -80,24 +80,43 @@
   :init-value nil
   :keymap nil
   :global t
+  :group 'battery-notifier
 
   (battery-notifier-watch))
 
 ;;; **************************************************************************
-;;; ***** utility functions
+;;; ***** customization options
 ;;; **************************************************************************
 
-(defvar battery-notifier-notification-function 'message
-  "The function to use when displaying low battery notifications.")
+(defgroup battery-notifier nil
+  "Sends notifications when battery capacity is low and suspends the computer
+   when battery capcity is critically low."
+  :prefix "battery-notifier-"
+  :group 'hardware)
 
-(defvar battery-notifier-suspend-shell-command "systemctl suspend"
-  "The shell command to use for suspending the computer.")
+(defcustom battery-notifier-notification-function 'message
+  "The function to use when displaying low battery notifications."
+  :type 'function
+  :group 'battery-notifier)
 
-(defvar battery-notifier-threshold 25
-  "The threshold below which battery notifications should be sent.")
+(defcustom battery-notifier-suspend-shell-command "systemctl suspend"
+  "The shell command to use for suspending the computer."
+  :type 'string
+  :group 'battery-notifier)
 
-(defvar battery-notifier-suspend-threshold 15
-  "The threshold below which the computer should suspend.")
+(defcustom battery-notifier-threshold 25
+  "The threshold below which battery notifications should be sent."
+  :type 'integer
+  :group 'battery-notifier)
+
+(defcustom battery-notifier-suspend-threshold 15
+  "The threshold below which the computer should suspend."
+  :type 'integer
+  :group 'battery-notifier)
+
+;;; **************************************************************************
+;;; ***** utility functions
+;;; **************************************************************************
 
 (defun battery-notifier-get-device-capacity()
   "Checks the current capacity of the battery."
