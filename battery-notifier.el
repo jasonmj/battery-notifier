@@ -89,8 +89,8 @@
 (defvar battery-notifier-notification-function 'message
   "The function to use when displaying low battery notifications.")
 
-(defvar battery-notifier-suspend-function (lambda()(call-process-shell-command "systemctl suspend"))
-  "The function to use when suspending the computer.")
+(defvar battery-notifier-suspend-shell-command "systemctl suspend"
+  "The shell command to use for suspending the computer.")
 
 (defvar battery-notifier-threshold 25
   "The threshold below which battery notifications should be sent.")
@@ -114,7 +114,7 @@
         (funcall battery-notifier-notification-function
                  (concat "Low Battery: " (number-to-string battery-capacity) "%")))
     (if (and (< battery-capacity battery-notifier-suspend-threshold) (equal battery-status "Discharging"))
-        (funcall battery-notifier-suspend-function))))
+        (call-process-shell-command battery-notifier-suspend-shell-command))))
 
 (defun battery-notifier-watch()
   (if (and battery-echo-area-format battery-status-function)
