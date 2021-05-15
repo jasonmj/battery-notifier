@@ -146,7 +146,7 @@
         (call-process-shell-command battery-notifier-suspend-shell-command))))
 
 (defun battery-notifier-watch()
-  "Start the battery-notifier-timer on a 30 second interval."
+  "Start the 'battery-notifier-timer' on a 30 second interval."
   (battery-notifier-check)
   (setq battery-notifier-timer
         (run-with-idle-timer 30 t 'battery-notifier-check)))
