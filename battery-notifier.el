@@ -9,9 +9,9 @@
 ;; Created:         May 15, 2021
 ;; Keywords:        battery
 ;; Package-Version: 20210515.0001
-;; Package-Commit: ed7abf23bdd076de803bb37c7870a0e5f9ee7520
+;; Package-Commit: 5e6f72ad7a8483da140fda068d404f87a19ad681
 ;; URL: https://github.com/jasonmj/battery-notifier
-;; Version: 0.02
+;; Version: 0.03
 
 ;; COPYRIGHT NOTICE
 
