@@ -90,7 +90,7 @@
 
 (defgroup battery-notifier nil
   "Sends notifications when battery capacity is low and suspends the computer
-   when battery capcity is critically low."
+   when battery capacity is critically low."
   :prefix "battery-notifier-"
   :group 'hardware)
 
