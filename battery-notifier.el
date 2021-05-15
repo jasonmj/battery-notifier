@@ -33,8 +33,8 @@
 ;;; Commentary:
 ;;
 ;;  Simple package to notify when battery capacity is low.  Allows
-;;  for configuration of battery device, notification capacity threshold,
-;;  suspend capacity threshold, notification function and suspend function.
+;;  for configuration of notification capacity threshold, suspend
+;;  capacity threshold, notification function, and suspend function.
 ;;  This is a global minor mode.
 
 ;;; Installation:
@@ -86,9 +86,6 @@
 ;;; ***** utility functions
 ;;; **************************************************************************
 
-(defvar battery-notifier-device "BAT0"
-  "The device to check capacity for displaying notifications.")
-
 (defvar battery-notifier-notification-function 'message
   "The function to use when displaying low battery notifications.")
 
@@ -102,18 +99,15 @@
   "The threshold below which the computer should suspend.")
 
 (defun battery-notifier-get-device-capacity()
-  "Checks the current capacity of the specified device."
-  (string-to-number
-   (shell-command-to-string
-    (concat "cat /sys/class/power_supply/" battery-notifier-device "/capacity"))))
+  "Checks the current capacity of the battery."
+  (string-to-number (battery-format "%p" (funcall battery-status-function))))
 
 (defun battery-notifier-get-device-status()
-  "Checks the current status of the specified device."
-  (string-trim (shell-command-to-string
-    (concat "cat /sys/class/power_supply/" battery-notifier-device "/status"))))
+  "Checks the current status of the battery."
+  (battery-format "%B" (funcall battery-status-function)))
 
 (defun battery-notifier-check()
-  (unless (bound-and-true-p battery-notifier-mode) (cancel-timer battery-notifier-watcher))
+  (unless (bound-and-true-p battery-notifier-mode) (cancel-timer battery-notifier-timer))
   (let ((battery-capacity (battery-notifier-get-device-capacity))
         (battery-status (battery-notifier-get-device-status)))
     (if (and (< battery-capacity battery-notifier-threshold) (equal battery-status "Discharging"))
@@ -123,9 +117,14 @@
         (funcall battery-notifier-suspend-function))))
 
 (defun battery-notifier-watch()
-  (battery-notifier-check)
-  (setq battery-notifier-watcher
-        (run-with-idle-timer 30 t 'battery-notifier-check)))
+  (if (and battery-echo-area-format battery-status-function)
+      (progn
+        (battery-notifier-check)
+        (setq battery-notifier-timer
+              (run-with-idle-timer 30 t 'battery-notifier-check)))
+    (progn
+      (message "Please require battery.el before enabling battery-notifier-mode")
+      (setq battery-notifier-mode nil))))
 
 (provide 'battery-notifier)
 
