@@ -33,8 +33,8 @@
 ;;; Commentary:
 ;;
 ;;  Simple package to notify when battery capacity is low.  Allows
-;;  for configuration of battery device, notfication capacity threshold,
-;;  suspend capcity threshold, notification function and suspend function.
+;;  for configuration of battery device, notification capacity threshold,
+;;  suspend capacity threshold, notification function and suspend function.
 ;;  This is a global minor mode.
 
 ;;; Installation:
