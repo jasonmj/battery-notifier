@@ -92,7 +92,7 @@
 (defvar battery-notifier-notification-function 'message
   "The function to use when displaying low battery notifications.")
 
-(defvar battery-notifier-suspend-function '(call-process-shell-command "systemctl suspend")
+(defvar battery-notifier-suspend-function (lambda()(call-process-shell-command "systemctl suspend"))
   "The function to use when suspending the computer.")
 
 (defvar battery-notifier-threshold 25
