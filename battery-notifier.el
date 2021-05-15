@@ -67,6 +67,8 @@
 
 ;;; Code:
 
+(require 'battery)
+
 ;;; **************************************************************************
 ;;; ***** mode definition
 ;;; **************************************************************************
@@ -92,7 +94,7 @@
   "Sends notifications when battery capacity is low and suspends the computer
    when battery capacity is critically low."
   :prefix "battery-notifier-"
-  :group 'hardware)
+  :group 'battery)
 
 (defcustom battery-notifier-notification-function 'message
   "The function to use when displaying low battery notifications."
