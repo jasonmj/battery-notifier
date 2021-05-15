@@ -89,7 +89,7 @@
 (defvar battery-notifier-device "BAT0"
   "The device to check capacity for displaying notifications.")
 
-(defvar battery-notifier-notification-function 'alert
+(defvar battery-notifier-notification-function 'message
   "The function to use when displaying low battery notifications.")
 
 (defvar battery-notifier-suspend-function '(call-process-shell-command "systemctl suspend")
