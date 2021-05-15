@@ -82,7 +82,7 @@
   :global t
   :group 'battery-notifier
 
-  (battery-notifier-watch))
+  (if (bound-and-true-p battery-notifier-mode) (battery-notifier-watch)))
 
 ;;; **************************************************************************
 ;;; ***** customization options
