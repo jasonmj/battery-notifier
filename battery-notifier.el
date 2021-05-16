@@ -2,8 +2,7 @@
 
 ;; This file is not part of Emacs
 
-;; Copyright (C) 2021 by Jason Johson
-;; Copyright (C) 2021-2021 by Jason Johnson
+;; Copyright (C) 2021 by Jason Johnson
 ;; Author:          Jason Johnson (jason@fullsteamlabs.com)
 ;; Maintainer:      Jason Johnson (jason@fullsteamlabs.com)
 ;; Created:         May 15, 2021
