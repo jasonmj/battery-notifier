@@ -92,14 +92,14 @@
   :type 'function
   :group 'battery-notifier)
 
-(defcustom battery-notifier-capacity-low-threshold 25
+(defcustom battery-notifier-capacity-low-threshold 15
   "The threshold below which low battery notifications should be sent."
   :type '(choice
           (integer :tag "Specify notification threshold")
           (const :tag "Do nothing" nil))
   :group 'battery-notifier)
 
-(defcustom battery-notifier-capacity-critical-threshold 15
+(defcustom battery-notifier-capacity-critical-threshold 5
   "The threshold below which the 'battery-notifier-capacity-critical-hook' will run."
   :type '(choice
           (integer :tag "Specify critical capacity threshold")
