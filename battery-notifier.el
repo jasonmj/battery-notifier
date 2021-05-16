@@ -66,6 +66,11 @@
 
 ;;; Code:
 
+;;; **************************************************************************
+;;; ***** require
+;;; **************************************************************************
+
+(require 'alert)
 (require 'battery)
 
 ;;; **************************************************************************
@@ -95,7 +100,7 @@
   :prefix "battery-notifier-"
   :group 'battery)
 
-(defcustom battery-notifier-notification-function 'message
+(defcustom battery-notifier-notification-function 'alert
   "The function to use when displaying low battery notifications."
   :type 'function
   :group 'battery-notifier)
