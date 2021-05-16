@@ -151,7 +151,8 @@
 
 (defun battery-notifier-watch()
   "Start the 'battery-notifier-timer'."
-  (setq battery-notifier-timer (run-with-timer 0 battery-notifier-timer-interval 'battery-notifier-check)))
+  (setq battery-notifier-timer
+        (run-with-timer 2 battery-notifier-timer-interval 'battery-notifier-check)))
 
 ;;; **************************************************************************
 ;;; ***** mode definition
