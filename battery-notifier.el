@@ -99,12 +99,16 @@
 
 (defcustom battery-notifier-threshold 25
   "The threshold below which battery notifications should be sent."
-  :type 'integer
+  :type '(choice
+          (integer :tag "Specify notification threshold")
+          (const :tag "Do nothing" nil))
   :group 'battery-notifier)
 
 (defcustom battery-notifier-suspend-threshold 15
   "The threshold below which the computer should suspend."
-  :type 'integer
+  :type '(choice
+          (integer :tag "Specify suspend threshold")
+          (const :tag "Do nothing" nil))
   :group 'battery-notifier)
 
 (defvar battery-notifier-timer nil
@@ -144,13 +148,15 @@
   "Get the current state of the battery and either notify or suspend if low."
   (let ((battery-capacity (battery-notifier-get-device-capacity))
         (battery-status (battery-notifier-get-device-status)))
-    (if (and (< battery-capacity battery-notifier-threshold)
-             (equal battery-status "Discharging"))
-        (funcall battery-notifier-notification-function
-                 (concat "Low Battery: " (number-to-string battery-capacity) "%")))
-    (if (and (< battery-capacity battery-notifier-suspend-threshold)
-             (equal battery-status "Discharging"))
-        (call-process-shell-command battery-notifier-suspend-shell-command))))
+    (unless (eq battery-notifier-threshold nil)
+      (if (and (< battery-capacity battery-notifier-threshold)
+               (equal battery-status "Discharging"))
+          (funcall battery-notifier-notification-function
+                   (concat "Low Battery: " (number-to-string battery-capacity) "%"))))
+    (unless (eq battery-notifier-suspend-threshold nil)
+      (if (and (< battery-capacity battery-notifier-suspend-threshold)
+               (equal battery-status "Discharging"))
+          (call-process-shell-command battery-notifier-suspend-shell-command)))))
 
 (defun battery-notifier-watch()
   "Start the 'battery-notifier-timer' on a 30 second interval."
