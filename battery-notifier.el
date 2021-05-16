@@ -84,24 +84,7 @@
   :group 'battery)
 
 ;;; **************************************************************************
-;;; ***** mode definition
-;;; **************************************************************************
-
-;;;###autoload
-(define-minor-mode battery-notifier-mode
-  "Toggle use of 'battery-notifier-mode'.
-   This global minor mode sends notifications when battery capacity is low
-   and suspends the computer when battery capacity is critically low."
-  :lighter " enabled"
-  :init-value nil
-  :keymap nil
-  :global t
-  :group 'battery-notifier
-
-  (if (bound-and-true-p battery-notifier-mode) (battery-notifier-watch)))
-
-;;; **************************************************************************
-;;; ***** customization options
+;;; ***** define customization options
 ;;; **************************************************************************
 
 (defcustom battery-notifier-notification-function 'alert
@@ -128,6 +111,24 @@
   "A variable for keeping track of the battery notifier timer.")
 
 ;;; **************************************************************************
+;;; ***** mode definition
+;;; **************************************************************************
+
+;;;###autoload
+(define-minor-mode battery-notifier-mode
+  "Toggle use of 'battery-notifier-mode'.
+   This global minor mode sends notifications when battery capacity is low
+   and suspends the computer when battery capacity is critically low."
+  :lighter " enabled"
+  :init-value nil
+  :keymap nil
+  :global t
+  :group 'battery-notifier
+
+  (if battery-notifier-mode (battery-notifier-watch)
+    (cancel-timer battery-notifier-timer)))
+
+;;; **************************************************************************
 ;;; ***** utility functions
 ;;; **************************************************************************
 
@@ -141,8 +142,6 @@
 
 (defun battery-notifier-check()
   "Get the current state of the battery and either notify or suspend if low."
-  (unless (bound-and-true-p battery-notifier-mode)
-    (cancel-timer battery-notifier-timer))
   (let ((battery-capacity (battery-notifier-get-device-capacity))
         (battery-status (battery-notifier-get-device-status)))
     (if (and (< battery-capacity battery-notifier-threshold)
