@@ -111,6 +111,11 @@
           (const :tag "Do nothing" nil))
   :group 'battery-notifier)
 
+(defcustom battery-notifier-timer-interval 30
+  "The interval at which the battery status should be checked."
+  :type 'integer
+  :group 'battery-notifier)
+
 (defvar battery-notifier-timer nil
   "A variable for keeping track of the battery notifier timer.")
 
@@ -159,8 +164,8 @@
           (call-process-shell-command battery-notifier-suspend-shell-command)))))
 
 (defun battery-notifier-watch()
-  "Start the 'battery-notifier-timer' on a 30 second interval."
-  (setq battery-notifier-timer (run-with-timer 0 30 'battery-notifier-check)))
+  "Start the 'battery-notifier-timer'."
+  (setq battery-notifier-timer (run-with-timer 0 battery-notifier-timer-interval 'battery-notifier-check)))
 
 (provide 'battery-notifier)
 
