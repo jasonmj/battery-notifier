@@ -31,10 +31,10 @@
 
 ;;; Commentary:
 ;;
-;;  Simple package to notify when battery capacity is low and suspend the
-;;  computer when battery capacity is critically low.  Allows for configuration
-;;  of notification capacity threshold, suspend capacity threshold,
-;;  notification function, and suspend function.
+;;  Simple package to notify when battery capacity is low and take action via
+;;  hooks when battery capacity is critically low.  Allows for configuration
+;;  of notification capacity threshold, action hook capacity threshold,
+;;  notification function, critical capacity hooks, and check interval.
 ;;  This is a global minor mode.
 
 ;;; Installation:
@@ -78,7 +78,7 @@
 ;;; **************************************************************************
 
 (defgroup battery-notifier nil
-  "Sends notifications when battery capacity is low and suspends the computer
+  "Sends notifications when battery capacity is low and runs action hooks
    when battery capacity is critically low."
   :prefix "battery-notifier-"
   :group 'battery)
@@ -92,28 +92,28 @@
   :type 'function
   :group 'battery-notifier)
 
-(defcustom battery-notifier-suspend-shell-command "systemctl suspend"
-  "The shell command to use for suspending the computer."
-  :type 'string
-  :group 'battery-notifier)
-
-(defcustom battery-notifier-threshold 25
-  "The threshold below which battery notifications should be sent."
+(defcustom battery-notifier-capacity-low-threshold 25
+  "The threshold below which low battery notifications should be sent."
   :type '(choice
           (integer :tag "Specify notification threshold")
           (const :tag "Do nothing" nil))
   :group 'battery-notifier)
 
-(defcustom battery-notifier-suspend-threshold 15
-  "The threshold below which the computer should suspend."
+(defcustom battery-notifier-capacity-critical-threshold 15
+  "The threshold below which the 'battery-notifier-capacity-critical-hook' will run."
   :type '(choice
-          (integer :tag "Specify suspend threshold")
+          (integer :tag "Specify critical capacity threshold")
           (const :tag "Do nothing" nil))
   :group 'battery-notifier)
 
 (defcustom battery-notifier-timer-interval 30
   "The interval at which the battery status should be checked."
   :type 'integer
+  :group 'battery-notifier)
+
+(defcustom battery-notifier-capacity-critical-hook nil
+  "Hooks run when battery capacity is critically low."
+  :type 'hook
   :group 'battery-notifier)
 
 (defvar battery-notifier-timer nil
@@ -136,18 +136,18 @@
   (battery-format "%B" (funcall battery-status-function)))
 
 (defun battery-notifier-check()
-  "Get the current state of the battery and either notify or suspend if low."
+  "Get the current state of the battery and either notify or run hooks if low."
   (let ((battery-capacity (battery-notifier-get-device-capacity))
         (battery-status (battery-notifier-get-device-status)))
-    (unless (eq battery-notifier-threshold nil)
-      (if (and (< battery-capacity battery-notifier-threshold)
+    (unless (eq battery-notifier-capacity-low-threshold nil)
+      (if (and (< battery-capacity battery-notifier-capacity-low-threshold)
                (equal battery-status "Discharging"))
           (funcall battery-notifier-notification-function
                    (concat "Low Battery: " (number-to-string battery-capacity) "%"))))
-    (unless (eq battery-notifier-suspend-threshold nil)
-      (if (and (< battery-capacity battery-notifier-suspend-threshold)
+    (unless (eq battery-notifier-capacity-critical-threshold nil)
+      (if (and (< battery-capacity battery-notifier-capacity-critical-threshold)
                (equal battery-status "Discharging"))
-          (call-process-shell-command battery-notifier-suspend-shell-command)))))
+          (run-hooks 'battery-notifier-capacity-critical-hook)))))
 
 (defun battery-notifier-watch()
   "Start the 'battery-notifier-timer'."
@@ -162,7 +162,7 @@
 (define-minor-mode battery-notifier-mode
   "Toggle use of 'battery-notifier-mode'.
    This global minor mode sends notifications when battery capacity is low
-   and suspends the computer when battery capacity is critically low."
+   and runs action hooks when battery capacity is critically low."
   :lighter " enabled"
   :init-value nil
   :keymap nil
