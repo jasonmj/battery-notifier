@@ -120,26 +120,9 @@
   "A variable for keeping track of the battery notifier timer.")
 
 ;;; **************************************************************************
-;;; ***** mode definition
-;;; **************************************************************************
-
-;;;###autoload
-(define-minor-mode battery-notifier-mode
-  "Toggle use of 'battery-notifier-mode'.
-   This global minor mode sends notifications when battery capacity is low
-   and suspends the computer when battery capacity is critically low."
-  :lighter " enabled"
-  :init-value nil
-  :keymap nil
-  :global t
-  :group 'battery-notifier
-
-  (if battery-notifier-mode (battery-notifier-watch)
-    (cancel-timer battery-notifier-timer)))
-
-;;; **************************************************************************
 ;;; ***** utility functions
 ;;; **************************************************************************
+
 (defun battery-notifier-alert(message)
   "A simple wrapper to display the MESSAGE via alert with title and severity."
   (alert message :title "Battery Notifier" :severity 'high))
@@ -169,6 +152,24 @@
 (defun battery-notifier-watch()
   "Start the 'battery-notifier-timer'."
   (setq battery-notifier-timer (run-with-timer 0 battery-notifier-timer-interval 'battery-notifier-check)))
+
+;;; **************************************************************************
+;;; ***** mode definition
+;;; **************************************************************************
+
+;;;###autoload
+(define-minor-mode battery-notifier-mode
+  "Toggle use of 'battery-notifier-mode'.
+   This global minor mode sends notifications when battery capacity is low
+   and suspends the computer when battery capacity is critically low."
+  :lighter " enabled"
+  :init-value nil
+  :keymap nil
+  :global t
+  :group 'battery-notifier
+
+  (if battery-notifier-mode (battery-notifier-watch)
+    (cancel-timer battery-notifier-timer)))
 
 (provide 'battery-notifier)
 
