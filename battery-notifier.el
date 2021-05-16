@@ -74,6 +74,16 @@
 (require 'battery)
 
 ;;; **************************************************************************
+;;; ***** define group
+;;; **************************************************************************
+
+(defgroup battery-notifier nil
+  "Sends notifications when battery capacity is low and suspends the computer
+   when battery capacity is critically low."
+  :prefix "battery-notifier-"
+  :group 'battery)
+
+;;; **************************************************************************
 ;;; ***** mode definition
 ;;; **************************************************************************
 
@@ -93,12 +103,6 @@
 ;;; **************************************************************************
 ;;; ***** customization options
 ;;; **************************************************************************
-
-(defgroup battery-notifier nil
-  "Sends notifications when battery capacity is low and suspends the computer
-   when battery capacity is critically low."
-  :prefix "battery-notifier-"
-  :group 'battery)
 
 (defcustom battery-notifier-notification-function 'alert
   "The function to use when displaying low battery notifications."
