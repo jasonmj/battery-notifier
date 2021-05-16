@@ -87,7 +87,7 @@
 ;;; ***** define customization options
 ;;; **************************************************************************
 
-(defcustom battery-notifier-notification-function 'alert
+(defcustom battery-notifier-notification-function 'battery-notifier-alert
   "The function to use when displaying low battery notifications."
   :type 'function
   :group 'battery-notifier)
@@ -140,6 +140,9 @@
 ;;; **************************************************************************
 ;;; ***** utility functions
 ;;; **************************************************************************
+(defun battery-notifier-alert(message)
+  "A simple wrapper to display the MESSAGE via alert with title and severity."
+  (alert message :title "Battery Notifier" :severity 'high))
 
 (defun battery-notifier-get-device-capacity()
   "Check the current capacity of the battery."
