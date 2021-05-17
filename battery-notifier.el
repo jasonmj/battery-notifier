@@ -138,12 +138,12 @@
   "Get the current state of the battery and either notify or run hooks if low."
   (let ((battery-capacity (battery-notifier-get-device-capacity))
         (battery-status (battery-notifier-get-device-status)))
-    (unless (eq battery-notifier-capacity-low-threshold nil)
+    (unless (not battery-notifier-capacity-low-threshold)
       (if (and (< battery-capacity battery-notifier-capacity-low-threshold)
                (equal battery-status "Discharging"))
           (funcall battery-notifier-notification-function
                    (concat "Low Battery: " (number-to-string battery-capacity) "%"))))
-    (unless (eq battery-notifier-capacity-critical-threshold nil)
+    (unless (not battery-notifier-capacity-critical-threshold)
       (if (and (< battery-capacity battery-notifier-capacity-critical-threshold)
                (equal battery-status "Discharging"))
           (run-hooks 'battery-notifier-capacity-critical-hook)))))
