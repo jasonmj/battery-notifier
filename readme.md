@@ -2,6 +2,9 @@
 A simple package to notify when battery capacity is low and suspend the computer when battery capacity is critically low.  Allows for configuration of notification capacity threshold, suspend capacity threshold, notification function, and suspend function.
 
 ### Getting Started
+Either clone from this GitHub repository or install from MELPA (recommended).
+
+If you've cloned the repository, follow these instructions:
 1. Place battery-notifier.el somewhere on your Emacs load path.
 2. Add `(require 'battery-notifier)` to your Emacs configuration.
 3. Add `(battery-notifier-mode 1)` to your Emacs configuration.
