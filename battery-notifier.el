@@ -29,7 +29,7 @@
 ;; Boston, MA 02111-1307, USA.
 
 ;;; Commentary:
-;;
+
 ;;  Simple package to notify when battery capacity is low and take action via
 ;;  hooks when battery capacity is critically low.  Allows for configuration
 ;;  of notification capacity threshold, action hook capacity threshold,
@@ -41,26 +41,26 @@
 ;;  1. Place battery-notifier.el somewhere on your Emacs load path.
 ;;  2. Add (require 'battery-notifier) to your .emacs
 ;;  3. Add (battery-notifier-mode 1) to your .emacs
-;;
+
 ;;  battery-notifier.el is also available in Melpa.  See
 ;;  https://github.com/melpa/melpa#usage for information on using
 ;;  Melpa.  Then you can run M-x package-install battery-notifier to install
 ;;  it.
 
 ;;; Usage:
-;;
+
 ;;  M-x `battery-notifer-mode'
 ;;      Toggles battery-notifier-mode on & off.  Optional arg turns
 ;;      battery-notifier-mode on if arg is a positive integer.
 
 ;;; Comments:
-;;
+
 ;;  Any comments, suggestions, bug reports or upgrade requests are
 ;;  welcome.  Please create issues or send pull requests via Github at
 ;;  https://github.com/jasonmj/battery-notifier.
 
 ;;; Change Log:
-;;
+
 ;;  See https://github.com/jasonmj/battery-notifer/commits/main
 
 ;;; Code:
