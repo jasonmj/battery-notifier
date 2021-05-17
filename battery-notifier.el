@@ -1,14 +1,13 @@
-;;; battery-notifier.el --- package used to notifiy when battery capacity is low
+;;; battery-notifier.el --- Notify when battery capacity is low
 
 ;; This file is not part of Emacs
 
 ;; Copyright (C) 2021 by Jason Johnson
+;; Package-Requires: ((alert "1.3"))
 ;; Author:          Jason Johnson (jason@fullsteamlabs.com)
 ;; Maintainer:      Jason Johnson (jason@fullsteamlabs.com)
 ;; Created:         May 15, 2021
-;; Keywords:        battery
-;; Package-Version: 20210515.0001
-;; Package-Commit: 65e3a26097f8adaa3e0bb530e8f8518b42f8908f
+;; Keywords:        hardware, battery
 ;; URL: https://github.com/jasonmj/battery-notifier
 ;; Version: 0.2.0
 
@@ -35,17 +34,6 @@
 ;;  of notification capacity threshold, action hook capacity threshold,
 ;;  notification function, critical capacity hooks, and check interval.
 ;;  This is a global minor mode.
-
-;;; Installation:
-;;
-;;  1. Place battery-notifier.el somewhere on your Emacs load path.
-;;  2. Add (require 'battery-notifier) to your .emacs
-;;  3. Add (battery-notifier-mode 1) to your .emacs
-
-;;  battery-notifier.el is also available in Melpa.  See
-;;  https://github.com/melpa/melpa#usage for information on using
-;;  Melpa.  Then you can run M-x package-install battery-notifier to install
-;;  it.
 
 ;;; Usage:
 
@@ -77,8 +65,7 @@
 ;;; **************************************************************************
 
 (defgroup battery-notifier nil
-  "Sends notifications when battery capacity is low and runs action hooks
-   when battery capacity is critically low."
+  "Sends notifications or run actions when battery capacity is low."
   :prefix "battery-notifier-"
   :group 'battery)
 
@@ -160,15 +147,16 @@
 ;;;###autoload
 (define-minor-mode battery-notifier-mode
   "Toggle use of 'battery-notifier-mode'.
-   This global minor mode sends notifications when battery capacity is low
-   and runs action hooks when battery capacity is critically low."
+This global minor mode sends notifications when battery capacity is low
+and runs action hooks when battery capacity is critically low."
   :lighter " enabled"
   :init-value nil
   :keymap nil
   :global t
   :group 'battery-notifier
 
-  (if battery-notifier-mode (battery-notifier-watch)
+  (if battery-notifier-mode
+      (battery-notifier-watch)
     (cancel-timer battery-notifier-timer)))
 
 (provide 'battery-notifier)
