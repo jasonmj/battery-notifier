@@ -9,7 +9,7 @@
 ;; Created:         May 15, 2021
 ;; Keywords:        hardware, battery
 ;; URL: https://github.com/jasonmj/battery-notifier
-;; Version: 0.2.1
+;; Version: 0.2.2
 
 ;; COPYRIGHT NOTICE
 
