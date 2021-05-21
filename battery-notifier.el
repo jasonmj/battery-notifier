@@ -109,15 +109,15 @@
 ;;; ***** utility functions
 ;;; **************************************************************************
 
-(defun battery-notifier-alert(message)
+(defun battery-notifier-alert (message)
   "A simple wrapper to display the MESSAGE via alert with title and severity."
   (alert message :title "Battery Notifier" :severity 'high))
 
-(defun battery-notifier-get-device-capacity()
+(defun battery-notifier-get-device-capacity ()
   "Check the current capacity of the battery."
   (string-to-number (battery-format "%p" (funcall battery-status-function))))
 
-(defun battery-notifier-get-device-status()
+(defun battery-notifier-get-device-status ()
   "Check the current status of the battery."
   (battery-format "%B" (funcall battery-status-function)))
 
@@ -134,7 +134,7 @@
                  (< battery-capacity battery-notifier-capacity-critical-threshold))
         (run-hooks 'battery-notifier-capacity-critical-hook)))))
 
-(defun battery-notifier-watch()
+(defun battery-notifier-watch ()
   "Start the 'battery-notifier-timer'."
   (setq battery-notifier-timer
         (run-with-timer 2 battery-notifier-timer-interval 'battery-notifier-check)))
