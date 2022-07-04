@@ -86,7 +86,7 @@
   :group 'battery-notifier)
 
 (defcustom battery-notifier-capacity-critical-threshold 5
-  "The threshold below which the 'battery-notifier-capacity-critical-hook' will run."
+  "The threshold below which the `battery-notifier-capacity-critical-hook' will run."
   :type '(choice
           (integer :tag "Specify critical capacity threshold")
           (const :tag "Do nothing" nil))
@@ -135,7 +135,7 @@
         (run-hooks 'battery-notifier-capacity-critical-hook)))))
 
 (defun battery-notifier-watch ()
-  "Start the 'battery-notifier-timer'."
+  "Start the `battery-notifier-timer'."
   (setq battery-notifier-timer
         (run-with-timer 2 battery-notifier-timer-interval 'battery-notifier-check)))
 
@@ -145,7 +145,7 @@
 
 ;;;###autoload
 (define-minor-mode battery-notifier-mode
-  "Toggle use of 'battery-notifier-mode'.
+  "Toggle use of `battery-notifier-mode'.
 This global minor mode sends notifications when battery capacity is low
 and runs action hooks when battery capacity is critically low."
   :lighter " enabled"
