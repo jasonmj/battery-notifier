@@ -125,7 +125,7 @@
   "Get the current state of the battery and either notify or run hooks if low."
   (let ((battery-capacity (battery-notifier-get-device-capacity))
         (battery-status (battery-notifier-get-device-status)))
-    (when (equal battery-status "Discharging")
+    (when (string-equal-ignore-case battery-status "discharging")
       (when (and battery-notifier-capacity-low-threshold
                  (< battery-capacity battery-notifier-capacity-low-threshold))
         (funcall battery-notifier-notification-function
