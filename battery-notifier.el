@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;;; battery-notifier.el --- Notify when battery capacity is low
 
 ;; This file is not part of Emacs
